@@ -1,7 +1,7 @@
-package com.classylab.youtubeapi.batch.controller;
+package com.classylab.youtubeapi.schedule.controller;
 
-import com.classylab.youtubeapi.batch.client.model.YoutubeResponse;
-import com.classylab.youtubeapi.batch.service.YoutubeFeignService;
+import com.classylab.youtubeapi.schedule.client.model.YoutubeResponse;
+import com.classylab.youtubeapi.schedule.service.YoutubeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 public class YoutubeController {
-    private final YoutubeFeignService youtubeFeignService;
+    private final YoutubeService youtubeFeignService;
 
     @GetMapping("/{keyword}")
     public ResponseEntity<YoutubeResponse> getYoutubeResponseBy(@PathVariable String keyword) {
