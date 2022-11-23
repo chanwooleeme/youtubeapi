@@ -9,10 +9,9 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class Scheduler {
     private static final String fireEveryFiveHour = "0 0 0/5 * * *";
-    private static final String testDateTime = "0 53 22 * * ?";
     private final YoutubeService youtubeFeignService;
 
-    @Scheduled(cron = testDateTime)
+    @Scheduled(cron = fireEveryFiveHour)
     public void scheduleTaskUsingCronExpression() {
         youtubeFeignService.saveYoutubeData();
     }
