@@ -9,6 +9,8 @@ import java.util.*;
 public class YoutubeResponse {
     private ArrayList<Item> items;
 
+    private String nextPageToken;
+
     @Getter
     public static class Item {
         private String kind;
@@ -16,7 +18,10 @@ public class YoutubeResponse {
         private Id id;
         private Snippet snippet;
 
-        public String getId() {
+        public String getPublishedAt() {
+            return this.snippet.getPublishedAt();
+        }
+        public String getVideoId() {
             return this.id.getVideoId();
         }
 

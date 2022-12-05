@@ -2,7 +2,7 @@ package com.classylab.youtubeapi.schedule.service;
 
 import com.classylab.youtubeapi.schedule.client.YoutubeClient;
 import com.classylab.youtubeapi.schedule.client.model.YoutubeResponse;
-import com.classylab.youtubeapi.schedule.model.Dance;
+import com.classylab.youtubeapi.schedule.model.Video;
 import com.classylab.youtubeapi.schedule.model.Genre;
 import com.classylab.youtubeapi.schedule.model.Thumbnail;
 import com.classylab.youtubeapi.schedule.repository.DanceRepository;
@@ -21,30 +21,43 @@ public class YoutubeService {
     private final DanceRepository danceRepository;
     private final ThumbnailRepository thumbnailRepository;
 
-    @Transactional
+    private final int MAX_PAGE = 10;
+
     public void saveYoutubeData() {
         for(Genre genre : Genre.values()) {
-            YoutubeResponse response = getYoutubeResposeByKeyword(genre.name());
-            convertAndSaveYoutubeResponse(response, genre);
+            getYoutubeResponseByKeyword(genre.name());
         }
     }
 
-    public YoutubeResponse getYoutubeResposeByKeyword(String keyword) {
-        return youtubeClient.getSearchResponse(keyword);
+    @Transactional
+    public void getYoutubeResponseByKeyword(String keyword) {
+        String pageToken = "";
+        int page = 0;
+
+        while(page < MAX_PAGE) {
+            YoutubeResponse response = youtubeClient.getSearchResponse(keyword, pageToken);
+            if (response.getNextPageToken() == null) break;
+            pageToken = response.getNextPageToken();
+            saveYoutubeResponse(response, Genre.nameOf(keyword));
+            page += 1;
+        }
     }
 
-    private void convertAndSaveYoutubeResponse(YoutubeResponse youtubeResponse, Genre genre) {
+    private void saveYoutubeResponse(YoutubeResponse youtubeResponse, Genre genre) {
         for (YoutubeResponse.Item item  : youtubeResponse.getItems()) {
-            Dance dance = Dance.create(genre, item.getTitle(), item.getId());
+            if (danceRepository.existsDanceByVideoId(item.getVideoId())) continue;
+
+            Video dance = Video.create(genre, item.getTitle(), item.getVideoId(), item.getPublishedAt());
+            dance = danceRepository.save(dance);
+
             Map<String, YoutubeResponse.Quality> qualities = item.getThumbnailQualities();
-            for (String key: qualities.keySet()) {
+
+            for (String key:qualities.keySet()) {
                 YoutubeResponse.Quality quality = qualities.get(key);
                 Thumbnail thumbnail = Thumbnail.create(key, quality.getUrl(), quality.getWidth(), quality.getHeight());
-                thumbnail.setDance(dance);
-                thumbnailRepository.save(thumbnail);
                 dance.addThumbnails(thumbnail);
+                thumbnailRepository.save(thumbnail);
             }
-            danceRepository.save(dance);
         }
     }
 }

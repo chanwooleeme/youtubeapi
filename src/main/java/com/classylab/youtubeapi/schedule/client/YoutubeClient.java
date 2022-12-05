@@ -9,5 +9,5 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface YoutubeClient {
 
     @GetMapping("${youtube.api.search}")
-    YoutubeResponse getSearchResponse(@RequestParam(value = "q") String q);
+    YoutubeResponse getSearchResponse(@RequestParam(value = "q") String q, @RequestParam(value = "pageToken", required = false) String pageToken);
 }
