@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface DanceRepository extends JpaRepository<Video, Long> {
+public interface VideoRepository extends JpaRepository<Video, Long> {
     List<Video> findAllByGenre(Genre genre, Pageable pageable);
 
     boolean existsDanceByVideoId(String videoId);

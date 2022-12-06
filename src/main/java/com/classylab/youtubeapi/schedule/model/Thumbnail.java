@@ -16,7 +16,7 @@ public class Thumbnail {
 
     @ManyToOne
     @JoinColumn(name = "VIDEO_ID")
-    private Video dance;
+    private Video video;
 
     private String quality;
 
@@ -35,11 +35,11 @@ public class Thumbnail {
         return thumbnail;
     }
 
-    public void setDance(Video dance) {
-        if (this.dance != null) {
-            this.dance.getThumbnails().remove(this);
+    public void setVideo(Video video) {
+        if (this.video != null) {
+            this.video.getThumbnails().remove(this);
         }
-        this.dance = dance;
-        dance.getThumbnails().add(this);
+        this.video = video;
+        video.getThumbnails().add(this);
     }
 }

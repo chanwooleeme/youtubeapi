@@ -1,7 +1,9 @@
 package com.classylab.youtubeapi.schedule.client.model;
 
+import com.classylab.youtubeapi.schedule.model.Thumbnail;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.*;
 
@@ -71,5 +73,13 @@ public class YoutubeResponse {
         private String url;
         private String width;
         private String height;
+
+        public static Quality create(Thumbnail thumbnail) {
+            Quality quality = new Quality();
+            quality.url = thumbnail.getUrl();
+            quality.width = thumbnail.getWidth();
+            quality.height = thumbnail.getHeight();
+            return quality;
+        }
     }
 }

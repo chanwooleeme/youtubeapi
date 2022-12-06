@@ -5,7 +5,7 @@ import com.classylab.youtubeapi.schedule.client.model.YoutubeResponse;
 import com.classylab.youtubeapi.schedule.model.Video;
 import com.classylab.youtubeapi.schedule.model.Genre;
 import com.classylab.youtubeapi.schedule.model.Thumbnail;
-import com.classylab.youtubeapi.schedule.repository.DanceRepository;
+import com.classylab.youtubeapi.schedule.repository.VideoRepository;
 import com.classylab.youtubeapi.schedule.repository.ThumbnailRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,7 +18,7 @@ import java.util.Map;
 public class YoutubeService {
 
     private final YoutubeClient youtubeClient;
-    private final DanceRepository danceRepository;
+    private final VideoRepository danceRepository;
     private final ThumbnailRepository thumbnailRepository;
 
     private final int MAX_PAGE = 10;
@@ -47,15 +47,15 @@ public class YoutubeService {
         for (YoutubeResponse.Item item  : youtubeResponse.getItems()) {
             if (danceRepository.existsDanceByVideoId(item.getVideoId())) continue;
 
-            Video dance = Video.create(genre, item.getTitle(), item.getChannelTitle(), item.getVideoId(), item.getPublishedAt());
-            dance = danceRepository.save(dance);
+            Video video = Video.create(genre, item.getTitle(), item.getChannelTitle(), item.getVideoId(), item.getPublishedAt());
+            video = danceRepository.save(video);
 
             Map<String, YoutubeResponse.Quality> qualities = item.getThumbnailQualities();
 
             for (String key:qualities.keySet()) {
                 YoutubeResponse.Quality quality = qualities.get(key);
                 Thumbnail thumbnail = Thumbnail.create(key, quality.getUrl(), quality.getWidth(), quality.getHeight());
-                dance.addThumbnails(thumbnail);
+                thumbnail.setVideo(video);
                 thumbnailRepository.save(thumbnail);
             }
         }

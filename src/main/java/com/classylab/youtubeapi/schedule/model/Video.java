@@ -26,15 +26,8 @@ public class Video {
 
     private LocalDateTime publishedAt;
 
-    @OneToMany(mappedBy = "dance", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "video", fetch = FetchType.LAZY)
     private List<Thumbnail> thumbnails = new ArrayList<>();
-
-    public void addThumbnails(Thumbnail thumbnail) {
-        this.thumbnails.add(thumbnail);
-        if (thumbnail.getDance() != this) {
-            thumbnail.setDance(this);
-        }
-    }
 
     public static Video create(Genre genre, String title, String channelTitle, String videoId, String publishedAt) {
         Video video = new Video();
