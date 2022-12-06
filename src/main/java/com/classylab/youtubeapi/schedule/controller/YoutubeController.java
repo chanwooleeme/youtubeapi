@@ -14,7 +14,14 @@ public class YoutubeController {
     private final YoutubeService youtubeFeignService;
 
     @GetMapping("/{keyword}")
-    public ResponseEntity<YoutubeResponse> getYoutubeResponseBy(@PathVariable String keyword) {
-        return ResponseEntity.ok(youtubeFeignService.getYoutubeResposeByKeyword(keyword));
+    public ResponseEntity<String> getYoutubeResponseBy(@PathVariable String keyword) {
+        youtubeFeignService.getYoutubeResponseByKeyword(keyword);
+        return ResponseEntity.ok("ok");
+    }
+
+    @GetMapping("/save")
+    public ResponseEntity<String> saveYoutubeVideo() {
+        youtubeFeignService.saveYoutubeData();
+        return ResponseEntity.ok("ok");
     }
 }

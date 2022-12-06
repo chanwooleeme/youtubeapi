@@ -47,7 +47,7 @@ public class YoutubeService {
         for (YoutubeResponse.Item item  : youtubeResponse.getItems()) {
             if (danceRepository.existsDanceByVideoId(item.getVideoId())) continue;
 
-            Video dance = Video.create(genre, item.getTitle(), item.getVideoId(), item.getPublishedAt());
+            Video dance = Video.create(genre, item.getTitle(), item.getChannelTitle(), item.getVideoId(), item.getPublishedAt());
             dance = danceRepository.save(dance);
 
             Map<String, YoutubeResponse.Quality> qualities = item.getThumbnailQualities();

@@ -29,6 +29,7 @@ public class YoutubeResponse {
             return this.snippet.getTitle();
         }
 
+        public String getChannelTitle() { return this.snippet.getChannelTitle();}
         public Map<String, Quality> getThumbnailQualities() {
             Map<String, Quality> map = new HashMap<>();
             map.put("Default", getThumbnails().getDefault());
