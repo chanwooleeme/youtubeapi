@@ -13,12 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class YoutubeController {
     private final YoutubeService youtubeFeignService;
 
-    @GetMapping("/{keyword}")
-    public ResponseEntity<String> getYoutubeResponseBy(@PathVariable String keyword) {
-        youtubeFeignService.getYoutubeResponseByKeyword(keyword);
-        return ResponseEntity.ok("ok");
-    }
-
     @GetMapping("/save")
     public ResponseEntity<String> saveYoutubeVideo() {
         youtubeFeignService.saveYoutubeData();

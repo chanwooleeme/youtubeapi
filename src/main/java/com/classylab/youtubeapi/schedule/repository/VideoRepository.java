@@ -12,7 +12,9 @@ import java.util.List;
 public interface VideoRepository extends JpaRepository<Video, Long> {
     List<Video> findAllByGenre(Genre genre, Pageable pageable);
 
-    List<Video> findAllByGenreIn(List<Genre> genres, Pageable pageable);
+    List<Video> findAllByGenreInOrderByRelevance(List<Genre> genres, Pageable pageable);
+
+    Video findTopByGenreOrderByIdDesc(Genre genre);
 
     Video findByVideoId(String videoId);
 

@@ -13,8 +13,10 @@ import java.util.List;
 @Getter
 public class Video {
 
-    @Id
-    @Column(name = "VIDEO_ID")
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
+    private Long id;
+    @Column(name = "VIDEO_ID", unique = true)
     private String videoId;
 
     @Enumerated(EnumType.STRING)
@@ -31,13 +33,14 @@ public class Video {
     @OneToMany(mappedBy = "video", fetch = FetchType.LAZY)
     private List<Thumbnail> thumbnails = new ArrayList<>();
 
-    public static Video create(Genre genre, String title, String channelTitle, String videoId, String publishedAt) {
+    public static Video create(Genre genre, String title, String channelTitle, String videoId, String publishedAt, Long relevance) {
         Video video = new Video();
         video.genre = genre;
         video.title = title;
         video.channelTitle = channelTitle;
         video.videoId = videoId;
         video.publishedAt = stringToLocalDateTime(publishedAt);
+        video.relevance = relevance;
         return video;
     }
     private static LocalDateTime stringToLocalDateTime(String dateTime) {

@@ -24,7 +24,7 @@ public class VideoService {
 
     @Transactional(readOnly = true)
     public List<Video> findByGenres(List<Genre> genres, Pageable pageable) {
-        return videoRepository.findAllByGenreIn(genres, pageable);
+        return videoRepository.findAllByGenreInOrderByRelevance(genres, pageable);
     }
 
     private List<Genre> stringToGenreList(String genres) {

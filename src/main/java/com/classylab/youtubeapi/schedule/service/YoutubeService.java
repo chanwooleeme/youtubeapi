@@ -18,15 +18,26 @@ import java.util.Map;
 public class YoutubeService {
 
     private final YoutubeClient youtubeClient;
-    private final VideoRepository danceRepository;
+    private final VideoRepository videoRepository;
     private final ThumbnailRepository thumbnailRepository;
 
     private final int MAX_PAGE = 10;
+    private Long relevence;
 
     public void saveYoutubeData() {
         for(Genre genre : Genre.values()) {
+            setRelevenceOfGenre(genre);
             getYoutubeResponseByKeyword(genre.name());
         }
+    }
+
+    @Transactional
+    public void setRelevenceOfGenre(Genre genre) {
+        Video video = videoRepository.findTopByGenreOrderByIdDesc(genre);
+        if (video != null)
+            relevence = video.getRelevance();
+        else
+            relevence = 0L;
     }
 
     @Transactional
@@ -45,10 +56,10 @@ public class YoutubeService {
 
     private void saveYoutubeResponse(YoutubeResponse youtubeResponse, Genre genre) {
         for (YoutubeResponse.Item item  : youtubeResponse.getItems()) {
-            if (danceRepository.existsDanceByVideoId(item.getVideoId())) continue;
+            if (videoRepository.existsDanceByVideoId(item.getVideoId())) continue;
 
-            Video video = Video.create(genre, item.getTitle(), item.getChannelTitle(), item.getVideoId(), item.getPublishedAt());
-            video = danceRepository.save(video);
+            Video video = Video.create(genre, item.getTitle(), item.getChannelTitle(), item.getVideoId(), item.getPublishedAt(), ++relevence);
+            video = videoRepository.save(video);
 
             Map<String, YoutubeResponse.Quality> qualities = item.getThumbnailQualities();
 

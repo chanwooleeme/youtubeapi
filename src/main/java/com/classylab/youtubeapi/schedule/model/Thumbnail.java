@@ -15,7 +15,7 @@ public class Thumbnail {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "VIDEO_ID")
+    @JoinColumn(name = "ID")
     private Video video;
 
     private String quality;
