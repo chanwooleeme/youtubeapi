@@ -1,13 +1,14 @@
-package com.classylab.youtubeapi.schedule.service;
+package com.classylab.youtubeapi.youtube.service;
 
-import com.classylab.youtubeapi.schedule.client.YoutubeClient;
-import com.classylab.youtubeapi.schedule.client.model.YoutubeResponse;
-import com.classylab.youtubeapi.schedule.model.Video;
-import com.classylab.youtubeapi.schedule.model.Genre;
-import com.classylab.youtubeapi.schedule.model.Thumbnail;
-import com.classylab.youtubeapi.schedule.repository.VideoRepository;
-import com.classylab.youtubeapi.schedule.repository.ThumbnailRepository;
+import com.classylab.youtubeapi.youtube.client.YoutubeClient;
+import com.classylab.youtubeapi.youtube.client.model.YoutubeResponse;
+import com.classylab.youtubeapi.youtube.model.Video;
+import com.classylab.youtubeapi.youtube.model.Genre;
+import com.classylab.youtubeapi.youtube.model.Thumbnail;
+import com.classylab.youtubeapi.youtube.repository.VideoRepository;
+import com.classylab.youtubeapi.youtube.repository.ThumbnailRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,7 +22,8 @@ public class YoutubeService {
     private final VideoRepository videoRepository;
     private final ThumbnailRepository thumbnailRepository;
 
-    private final int MAX_PAGE = 10;
+    @Value("${youtube.api.max-page}")
+    private final Integer MAX_PAGE;
     private Long relevence;
 
     public void saveYoutubeData() {
@@ -31,7 +33,7 @@ public class YoutubeService {
         }
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public void setRelevenceOfGenre(Genre genre) {
         Video video = videoRepository.findTopByGenreOrderByIdDesc(genre);
         if (video != null)
@@ -40,7 +42,6 @@ public class YoutubeService {
             relevence = 0L;
     }
 
-    @Transactional
     public void getYoutubeResponseByKeyword(String keyword) {
         String pageToken = "";
         int page = 0;
@@ -54,7 +55,8 @@ public class YoutubeService {
         }
     }
 
-    private void saveYoutubeResponse(YoutubeResponse youtubeResponse, Genre genre) {
+    @Transactional
+    public void saveYoutubeResponse(YoutubeResponse youtubeResponse, Genre genre) {
         for (YoutubeResponse.Item item  : youtubeResponse.getItems()) {
             if (videoRepository.existsDanceByVideoId(item.getVideoId())) continue;
 

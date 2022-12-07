@@ -1,7 +1,7 @@
 package com.classylab.youtubeapi.api.model;
 
-import com.classylab.youtubeapi.schedule.client.model.YoutubeResponse;
-import com.classylab.youtubeapi.schedule.model.Thumbnail;
+import com.classylab.youtubeapi.youtube.client.model.YoutubeResponse;
+import com.classylab.youtubeapi.youtube.model.Thumbnail;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 

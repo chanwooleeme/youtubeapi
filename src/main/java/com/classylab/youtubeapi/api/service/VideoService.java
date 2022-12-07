@@ -1,9 +1,9 @@
 package com.classylab.youtubeapi.api.service;
 
 import com.classylab.youtubeapi.api.model.VideoListResponse;
-import com.classylab.youtubeapi.schedule.model.Genre;
-import com.classylab.youtubeapi.schedule.model.Video;
-import com.classylab.youtubeapi.schedule.repository.VideoRepository;
+import com.classylab.youtubeapi.youtube.model.Genre;
+import com.classylab.youtubeapi.youtube.model.Video;
+import com.classylab.youtubeapi.youtube.repository.VideoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;

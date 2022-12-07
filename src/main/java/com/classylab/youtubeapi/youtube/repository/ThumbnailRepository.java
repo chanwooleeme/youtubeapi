@@ -1,6 +1,6 @@
-package com.classylab.youtubeapi.schedule.repository;
+package com.classylab.youtubeapi.youtube.repository;
 
-import com.classylab.youtubeapi.schedule.model.Thumbnail;
+import com.classylab.youtubeapi.youtube.model.Thumbnail;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

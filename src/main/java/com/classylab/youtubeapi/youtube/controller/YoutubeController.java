@@ -1,11 +1,9 @@
-package com.classylab.youtubeapi.schedule.controller;
+package com.classylab.youtubeapi.youtube.controller;
 
-import com.classylab.youtubeapi.schedule.client.model.YoutubeResponse;
-import com.classylab.youtubeapi.schedule.service.YoutubeService;
+import com.classylab.youtubeapi.youtube.service.YoutubeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController

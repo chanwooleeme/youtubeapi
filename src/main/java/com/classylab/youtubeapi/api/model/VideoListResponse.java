@@ -1,6 +1,6 @@
 package com.classylab.youtubeapi.api.model;
 
-import com.classylab.youtubeapi.schedule.model.Video;
+import com.classylab.youtubeapi.youtube.model.Video;
 import lombok.Getter;
 
 import java.util.List;

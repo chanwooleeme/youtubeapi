@@ -1,6 +1,6 @@
-package com.classylab.youtubeapi.schedule.schedule;
+package com.classylab.youtubeapi.youtube.schedule;
 
-import com.classylab.youtubeapi.schedule.service.YoutubeService;
+import com.classylab.youtubeapi.youtube.service.YoutubeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;

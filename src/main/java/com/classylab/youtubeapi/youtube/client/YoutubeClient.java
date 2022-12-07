@@ -1,6 +1,6 @@
-package com.classylab.youtubeapi.schedule.client;
+package com.classylab.youtubeapi.youtube.client;
 
-import com.classylab.youtubeapi.schedule.client.model.YoutubeResponse;
+import com.classylab.youtubeapi.youtube.client.model.YoutubeResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
