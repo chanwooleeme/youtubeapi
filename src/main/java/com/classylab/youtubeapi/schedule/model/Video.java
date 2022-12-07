@@ -26,6 +26,8 @@ public class Video {
 
     private LocalDateTime publishedAt;
 
+    private Long relevance;
+
     @OneToMany(mappedBy = "video", fetch = FetchType.LAZY)
     private List<Thumbnail> thumbnails = new ArrayList<>();
 

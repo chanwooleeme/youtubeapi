@@ -12,7 +12,11 @@ public class VideoListResponse {
 
     public static VideoListResponse create(List<Video> videos) {
         VideoListResponse videoListResponse = new VideoListResponse();
-        videoListResponse.videos = videos.stream().map(VideoResponse::from).collect(Collectors.toList());;
+        videoListResponse.videos = videosToResponse(videos);
         return videoListResponse;
+    }
+
+    private static List<VideoResponse> videosToResponse(List<Video> videos) {
+        return videos.stream().map(VideoResponse::from).collect(Collectors.toList());
     }
 }

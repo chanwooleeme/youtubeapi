@@ -6,7 +6,7 @@ import lombok.Getter;
 @Getter
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum Genre {
-    왁킹;
+    왁킹, 비보잉;
 
     public static Genre nameOf(String name) {
         for (Genre genre : Genre.values()) {

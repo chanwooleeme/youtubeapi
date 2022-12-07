@@ -9,19 +9,25 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class VideoService {
     private final VideoRepository videoRepository;
 
-    @Transactional(readOnly = true)
-    public List<Video> findByGenre(Genre genre, Pageable pageable) {
-        return videoRepository.findAllByGenre(genre, pageable);
+    public VideoListResponse findVideosByGenres(String genres, Pageable pageable) {
+        return VideoListResponse.create(findByGenres(stringToGenreList(genres), pageable));
     }
 
-    public VideoListResponse responseVideoList(Genre genre, Pageable pageable) {
-        return VideoListResponse.create(findByGenre(genre, pageable));
+    @Transactional(readOnly = true)
+    public List<Video> findByGenres(List<Genre> genres, Pageable pageable) {
+        return videoRepository.findAllByGenreIn(genres, pageable);
+    }
+
+    private List<Genre> stringToGenreList(String genres) {
+        return Arrays.stream(genres.split(" ")).map(Genre::nameOf).collect(Collectors.toList());
     }
 }
